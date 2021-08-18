@@ -278,7 +278,7 @@ DSEXS24Sample DSEXS24::readSample(juce::FileInputStream *inputStream, juce::int6
 }
 
   // if sign bit is set (128 - 255 for 8 bit)
-int DSEXS24::twosComplement(int value, int bits) {
+short DSEXS24::twosComplement(short value, short bits) {
     if ((value & (1 << (bits - 1))) != 0) {
         return value - (1 << bits);
     }

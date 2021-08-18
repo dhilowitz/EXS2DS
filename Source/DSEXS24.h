@@ -10,7 +10,7 @@
 
 #pragma once
 
-#import <JuceHeader.h>
+#include <JuceHeader.h>
 
 struct DSEXS24Zone {
     int id;
@@ -79,7 +79,7 @@ private:
     juce::Array<DSEXS24Sample> samples;
     
     juce::String readFixedLengthString(juce::FileInputStream *inputStream, int length);
-    int twosComplement(int value, int bits);
+    short twosComplement(short value, short bits);
     DSEXS24Zone readZone(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 size, bool bigEndian);
     DSEXS24Group readGroup(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 size, bool bigEndian);
     DSEXS24Sample readSample(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 size, bool bigEndian);
