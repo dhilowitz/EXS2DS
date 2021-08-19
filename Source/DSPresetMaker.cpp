@@ -20,17 +20,16 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
     valueTree.appendChild(groupsVT, nullptr);
     
     for (DSEXS24Zone zone : zones) {
-        bool groupFound = false;
-        for (DSEXS24Group group : groups) {
-            if(group.id == zone.groupIndex) {
-                groupFound = true;
-                break;
-            }
+        if(zone.groupIndex < 0) {
+            printf("This zone's group index is less than 0. This should never happen.");
+            continue;
+        } else if(zone.groupIndex > 100) {
+            printf("This zone's group index is less than 100. This converter may not support this file.");
+            continue;
         }
-        if (!groupFound) {
+        while (zone.groupIndex >= groups.size()) {
             DSEXS24Group newGroup;
-            newGroup.id = zone.groupIndex;
-            newGroup.name = "";
+            newGroup.name = "Couldn't find group index " + juce::String(zone.groupIndex);
             groups.add(newGroup);
         }
     }
@@ -45,9 +44,11 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
     groupIndexes.sort();
     
     // Iterate through the groups and add their respective samples
-    for(DSEXS24Group group : groups) {
+    for(int groupIndex = 0 ; groupIndex < groups.size(); groupIndex++) {
+        DSEXS24Group group = groups[groupIndex];
         juce::ValueTree dsGroup ("group");
         dsGroup.setProperty("name", group.name, nullptr);
+        dsGroup.setProperty("groupIndex", groupIndex, nullptr);
         if(group.pan != 0) {
             dsGroup.setProperty("pan", group.pan, nullptr);
         }
@@ -55,10 +56,10 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
             dsGroup.setProperty("volume", juce::String(group.volume) + "dB", nullptr);
         }
         
-//        dsGroup.setProperty("seqPosition", group.sequence + 2, nullptr);
+        dsGroup.setProperty("exsSequencer", group.sequence, nullptr);
         
         for (DSEXS24Zone zone : zones) {
-            if (zone.groupIndex == group.id) {
+            if (zone.groupIndex == groupIndex) {
                 juce::ValueTree dsSample("sample");
                 dsSample.setProperty("name", zone.name, nullptr);
                 if(zone.pitch == false) {
@@ -105,7 +106,7 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
                 if(sampleIndex < samples.size()) {
                     DSEXS24Sample &sample = samples.getReference(sampleIndex);
                     if(samplePath.isNotEmpty()) {
-                        juce::File sampleFile = juce::File(samplePath).getChildFile(sample.fileName);
+                        juce::File sampleFile = juce::File::getCurrentWorkingDirectory().getChildFile (samplePath).getChildFile(sample.fileName);
                         dsSample.setProperty("path", sampleFile.getRelativePathFrom(outputDir), nullptr);
                     } else {
                         juce::File sampleFile = juce::File(sample.filePath).getChildFile(sample.fileName);

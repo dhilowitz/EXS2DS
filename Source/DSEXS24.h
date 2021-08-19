@@ -43,10 +43,10 @@ struct DSEXS24Zone {
 };
 
 struct DSEXS24Group {
-    int id;
+//    int id;
     juce::String name;
-    short volume;
-    short pan;
+    short volume =0;
+    short pan =0;
     short polyphony;
     short velRangeLow;
     short velRangeHigh;
