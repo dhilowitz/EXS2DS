@@ -55,7 +55,7 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
             dsGroup.setProperty("volume", juce::String(group.volume) + "dB", nullptr);
         }
         
-        dsGroup.setProperty("seqPosition", group.sequence + 2, nullptr);
+//        dsGroup.setProperty("seqPosition", group.sequence + 2, nullptr);
         
         for (DSEXS24Zone zone : zones) {
             if (zone.groupIndex == group.id) {

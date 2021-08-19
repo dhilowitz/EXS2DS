@@ -83,7 +83,6 @@ private:
     DSEXS24Zone readZone(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 size, bool bigEndian);
     DSEXS24Group readGroup(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 size, bool bigEndian);
     DSEXS24Sample readSample(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 size, bool bigEndian);
-    //          table.insert(exs.zones, create_zone(fh, i, size + 84, big_endian))
 };
 
 
