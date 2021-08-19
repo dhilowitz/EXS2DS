@@ -182,8 +182,8 @@ DSEXS24Zone DSEXS24::readZone(juce::FileInputStream *inputStream, juce::int64 i,
 DSEXS24Group DSEXS24::readGroup(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 size, bool bigEndian) {
     DSEXS24Group group;
 
-    inputStream->setPosition(i + 8);
-    group.id  = bigEndian ? inputStream->readIntBigEndian() : inputStream->readInt();
+//    inputStream->setPosition(i + 8);
+//    group.id  = groupIndex;
     
     inputStream->setPosition(i + 20);
     group.name = readFixedLengthString(inputStream, 64);
