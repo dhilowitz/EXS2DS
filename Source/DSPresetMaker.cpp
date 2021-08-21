@@ -38,8 +38,10 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
         bool hasSamples = false;
         DSEXS24Group group = (groupIndex >= 0) ? groups[groupIndex] : DSEXS24Group();
         juce::ValueTree dsGroup ("group");
-        dsGroup.setProperty("name", group.name, nullptr);
-        dsGroup.setProperty("groupIndex", groupIndex, nullptr);
+        if(group.name != "") {
+            dsGroup.setProperty("name", group.name, nullptr);
+        }
+        dsGroup.setProperty("exsGroupIndex", groupIndex, nullptr);
         if(group.pan != 0) {
             dsGroup.setProperty("pan", group.pan, nullptr);
         }
@@ -47,7 +49,10 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
             dsGroup.setProperty("volume", juce::String(group.volume) + "dB", nullptr);
         }
         
-        dsGroup.setProperty("exsSequencer", group.sequence, nullptr);
+        if(group.seqNumber != 0) {
+            dsGroup.setProperty("seqNumber", group.seqNumber, nullptr);
+        }
+//        dsGroup.setProperty("exsSequence", group.exsSequence, nullptr);
         
         for (DSEXS24Zone zone : zones) {
             if (zone.groupIndex == groupIndex) {

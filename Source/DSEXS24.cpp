@@ -64,25 +64,28 @@ bool DSEXS24::loadExs(juce::File file) {
         juce::int64 chunk_type = ((sig & 0x0F000000) >> 24);
         
         if (chunk_type == 0x01) {
-          if (size < 104) {
-              return false;
-          }
+            if (size < 104) {
+                return false;
+            }
             DBG("Zone encountered");
             zones.add(readZone(inputStream.get(), i, size + 84, bigEndian));
         } else if (chunk_type == 0x02) {
             DBG("Group encountered");
             groups.add(readGroup(inputStream.get(), i, size + 84, bigEndian));
         } else if (chunk_type == 0x03) {
-          if (size != 336 && size != 592 && size != 600) {
-              return false;
-          }
-            DBG("sample encountered");
+            if (size != 336 && size != 592 && size != 600) {
+                return false;
+            }
+            DBG("Sample encountered");
             samples.add(readSample(inputStream.get(), i, size + 84, bigEndian));
         } else {
             DBG("Blank chunk type");
         }
         i = i + size + 84;
     }
+    
+    readSequences();
+    convertSeqNumbers();
 
     return true;
 }
@@ -198,12 +201,12 @@ DSEXS24Group DSEXS24::readGroup(juce::FileInputStream *inputStream, juce::int64 
     group.polyphony = inputStream->readByte();
     
     // This has a value of 0. Not sure what it is
-    inputStream->setPosition(i + 87);
-    char test = inputStream->readByte();
+//    inputStream->setPosition(i + 87);
+//    char test = inputStream->readByte();
     
     // This has a value of 1. not clue what it is
-    inputStream->setPosition(i + 88);
-    char test2 = inputStream->readByte();
+//    inputStream->setPosition(i + 88);
+//    char test2 = inputStream->readByte();
     
     inputStream->setPosition(i + 89);
     group.velRangeLow = inputStream->readByte();
@@ -236,7 +239,7 @@ DSEXS24Group DSEXS24::readGroup(juce::FileInputStream *inputStream, juce::int64 
     group.output = inputStream->readByte();
     
     inputStream->setPosition(i + 164);
-    group.sequence = bigEndian ? inputStream->readIntBigEndian() : inputStream->readInt();
+    group.exsSequence = bigEndian ? inputStream->readIntBigEndian() : inputStream->readInt();
 
     return group;
 }
@@ -292,4 +295,81 @@ juce::String DSEXS24::readFixedLengthString(juce::FileInputStream *inputStream, 
         return {};
     }
     return juce::String(data).trimEnd();
+}
+
+void DSEXS24::convertSeqNumbers() {
+    for (int groupIndex = 0; groupIndex < groups.size(); groupIndex++) {
+        DSEXS24Group &group = groups.getReference(groupIndex);
+        group.seqNumber = 0;
+        for (juce::Array<int> sequence: sequences) {
+            if(sequence.contains(groupIndex)) {
+                group.seqNumber = sequence.indexOf(groupIndex) + 1;
+            }
+        }
+    }
+}
+
+void DSEXS24::readSequences() {
+    
+    // exs handles round robin samples by using groups that point to the next group, and so on
+    //    until the sequence is reset by pointing to group -1;
+    //    here we trace each of those chains for simple processing later
+
+    sequences.clear();
+
+    for (int groupIndex = 0; groupIndex < groups.size(); groupIndex++) {
+        DSEXS24Group group = groups[groupIndex];
+    
+//        if (!group.exsSequence) {
+//            continue;
+//        }
+
+        
+        bool foundInSequence = false;
+        for (juce::Array<int> sequence : sequences) {
+            if(sequence.contains(groupIndex)) {
+                foundInSequence = true;
+                break;
+            }
+        }
+        if(foundInSequence) {
+            continue;
+        }
+        
+        // trace back to the first group in the chain by looking for a group that points to this chain,
+        // and repeating the process until we end up at a group that's not pointed to
+
+        int gid = groupIndex;
+        juce::Array<int> sequence;
+
+        int cont = true;
+        while (cont) {
+            cont = false;
+            for(int currentGroupIndex = 0; currentGroupIndex < groups.size(); currentGroupIndex++) {
+                DSEXS24Group g = groups[currentGroupIndex];
+                
+                if (g.exsSequence == gid && (currentGroupIndex != g.exsSequence) && !sequence.contains(gid)) {
+                    sequence.add(gid);
+                    gid = currentGroupIndex;
+                    cont = true;
+                    break;
+                }
+            }
+        }
+        
+        // now that we're at the start of the chain, simply follow it to the end
+        sequence.clear();
+        while (gid != -1 and !sequence.contains(gid)) {
+//            sequence.add(gid);
+            sequence.insert(0, gid);
+            gid = groups[gid].exsSequence;
+        }
+
+        if (sequence.size() > 1) {
+            
+            sequences.add(sequence);
+        }
+
+    }
+    
 }

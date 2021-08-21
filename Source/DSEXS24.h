@@ -52,7 +52,8 @@ struct DSEXS24Group {
     short velRangeHigh;
     short trigger;
     short output;
-    int sequence;
+    int exsSequence;
+    int seqNumber;
 };
 
 struct DSEXS24Sample {
@@ -77,12 +78,15 @@ private:
     juce::Array<DSEXS24Zone> zones;
     juce::Array<DSEXS24Group> groups;
     juce::Array<DSEXS24Sample> samples;
+    juce::Array<juce::Array<int>> sequences;
     
     juce::String readFixedLengthString(juce::FileInputStream *inputStream, int length);
     short twosComplement(short value, short bits);
     DSEXS24Zone readZone(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 size, bool bigEndian);
     DSEXS24Group readGroup(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 size, bool bigEndian);
     DSEXS24Sample readSample(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 size, bool bigEndian);
+    void readSequences();
+    void convertSeqNumbers();
 };
 
 
