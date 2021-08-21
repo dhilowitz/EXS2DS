@@ -21,10 +21,9 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
     
     for (DSEXS24Zone zone : zones) {
         if(zone.groupIndex < 0) {
-            printf("This zone's group index is less than 0. This should never happen.");
             continue;
         } else if(zone.groupIndex > 100) {
-            printf("This zone's group index is less than 100. This converter may not support this file.");
+            printf("This zone's group index is greater than 100. This converter may not support this file.");
             continue;
         }
         while (zone.groupIndex >= groups.size()) {
@@ -34,18 +33,10 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
         }
     }
     
-    // Pre-scan the zones to find all of the group indexes
-    juce::Array<int> groupIndexes;
-    for (DSEXS24Zone zone : zones) {
-        if (!groupIndexes.contains(zone.groupIndex)) {
-            groupIndexes.add(zone.groupIndex);
-        }
-    }
-    groupIndexes.sort();
-    
     // Iterate through the groups and add their respective samples
-    for(int groupIndex = 0 ; groupIndex < groups.size(); groupIndex++) {
-        DSEXS24Group group = groups[groupIndex];
+    for(int groupIndex = -1; groupIndex < groups.size(); groupIndex++) {
+        bool hasSamples = false;
+        DSEXS24Group group = (groupIndex >= 0) ? groups[groupIndex] : DSEXS24Group();
         juce::ValueTree dsGroup ("group");
         dsGroup.setProperty("name", group.name, nullptr);
         dsGroup.setProperty("groupIndex", groupIndex, nullptr);
@@ -114,11 +105,13 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
                     }
                     
                 }
-                
+                hasSamples = true;
                 dsGroup.appendChild(dsSample, nullptr);
             }
         }
-        groupsVT.appendChild(dsGroup, nullptr);
+        if(hasSamples) {
+            groupsVT.appendChild(dsGroup, nullptr);
+        }
     }
     
 }
