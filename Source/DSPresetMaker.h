@@ -17,7 +17,10 @@ public:
     void parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::File outputDir);
     void parseSFZValueTree(juce::ValueTree valueTree);
     juce::String getXML() {
-        return valueTree.toXmlString();
+        juce::XmlElement::TextFormat format;
+        format.lineWrapLength = 20000;
+//        format.newLineChars = "";
+        return valueTree.toXmlString(format);
     }
     
     enum HeaderLevel {

@@ -64,8 +64,8 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
                 dsSample.setProperty("rootNote", zone.key, nullptr);
                 dsSample.setProperty("loNote", zone.keyLow, nullptr);
                 dsSample.setProperty("hiNote", zone.keyHigh, nullptr);
-                dsSample.setProperty("loVel", zone.loVel, nullptr);
-                dsSample.setProperty("hiVel", zone.hiVel, nullptr);
+                dsSample.setProperty("loVel", zone.velocityRangeOn ? zone.loVel : 0, nullptr);
+                dsSample.setProperty("hiVel", zone.velocityRangeOn ? zone.hiVel : 127, nullptr);
                 
                 float tuning = (float) zone.coarseTuning + (((float)zone.fineTuning)/100.0f);
                 if(tuning != 0) {
