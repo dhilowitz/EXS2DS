@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    DSPresetMaker.h
+    DSPresetConverter.h
     Created: 16 Aug 2021 9:55:21pm
     Author:  David Hilowitz
 
@@ -12,7 +12,7 @@
 
 #include "DSEXS24.h"
 
-class DSPresetMaker {
+class DSPresetConverter {
 public:
     void parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::File outputDir);
     void parseSFZValueTree(juce::ValueTree valueTree);
@@ -22,6 +22,9 @@ public:
 //        format.newLineChars = "";
         return valueTree.toXmlString(format);
     }
+    
+    juce::ValueTree getValueTree() { return valueTree; }
+    std::unique_ptr<juce::XmlElement> getXMLObject() { return valueTree.createXml(); }
     
     enum HeaderLevel {
         headerLevelGlobal,

@@ -1,16 +1,16 @@
 /*
   ==============================================================================
 
-    DSPresetMaker.cpp
+    DSPresetConverter.cpp
     Created: 16 Aug 2021 9:55:21pm
     Author:  David Hilowitz
 
   ==============================================================================
 */
 
-#include "DSPresetMaker.h"
+#include "DSPresetConverter.h"
 
-void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::File outputDir) {
+void DSPresetConverter::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::File outputDir) {
     juce::Array<DSEXS24Zone> &zones = exs24.getZones();
     juce::Array<DSEXS24Group> &groups = exs24.getGroups();
     juce::Array<DSEXS24Sample> &samples = exs24.getSamples();
@@ -41,7 +41,7 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
         if(group.name != "") {
             dsGroup.setProperty("name", group.name, nullptr);
         }
-        dsGroup.setProperty("exsGroupIndex", groupIndex, nullptr);
+//        dsGroup.setProperty("_exsGroupIndex", groupIndex, nullptr);
         if(group.pan != 0) {
             dsGroup.setProperty("pan", group.pan, nullptr);
         }
@@ -50,13 +50,28 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
         }
         
         if(group.seqNumber != 0) {
-            dsGroup.setProperty("seqNumber", group.seqNumber, nullptr);
+            dsGroup.setProperty("seqPosition", group.seqNumber, nullptr);
         }
 //        dsGroup.setProperty("exsSequence", group.exsSequence, nullptr);
         
         for (DSEXS24Zone zone : zones) {
             if (zone.groupIndex == groupIndex) {
                 juce::ValueTree dsSample("sample");
+                
+                int sampleIndex = zone.sampleIndex;
+                if(sampleIndex < 0 || sampleIndex >= samples.size()) {
+                    continue;
+                }
+                
+                DSEXS24Sample &sample = samples.getReference(sampleIndex);
+                if(samplePath.isNotEmpty()) {
+                    juce::File sampleFile = juce::File::getCurrentWorkingDirectory().getChildFile (samplePath).getChildFile(sample.fileName);
+                    dsSample.setProperty("path", sampleFile.getRelativePathFrom(outputDir), nullptr);
+                } else {
+                    juce::File sampleFile = juce::File(sample.filePath).getChildFile(sample.fileName);
+                    dsSample.setProperty("path", sampleFile.getRelativePathFrom(outputDir), nullptr);
+                }
+                    
                 dsSample.setProperty("name", zone.name, nullptr);
                 if(zone.pitch == false) {
                     dsSample.setProperty("pitchKeyTrack", 0, nullptr);
@@ -98,18 +113,7 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
                     dsSample.setProperty("loopCrossfadeMode", zone.loopEqualPower ? "equal_power" : "linear", nullptr);
                 }
                 
-                int sampleIndex = zone.sampleIndex;
-                if(sampleIndex < samples.size()) {
-                    DSEXS24Sample &sample = samples.getReference(sampleIndex);
-                    if(samplePath.isNotEmpty()) {
-                        juce::File sampleFile = juce::File::getCurrentWorkingDirectory().getChildFile (samplePath).getChildFile(sample.fileName);
-                        dsSample.setProperty("path", sampleFile.getRelativePathFrom(outputDir), nullptr);
-                    } else {
-                        juce::File sampleFile = juce::File(sample.filePath).getChildFile(sample.fileName);
-                        dsSample.setProperty("path", sampleFile.getRelativePathFrom(outputDir), nullptr);
-                    }
-                    
-                }
+                
                 hasSamples = true;
                 dsGroup.appendChild(dsSample, nullptr);
             }
@@ -121,7 +125,7 @@ void DSPresetMaker::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juce::F
     
 }
 
-void DSPresetMaker::parseSFZValueTree(juce::ValueTree sfz) {
+void DSPresetConverter::parseSFZValueTree(juce::ValueTree sfz) {
     valueTree = juce::ValueTree("DecentSampler");
     valueTree.setProperty("pluginVersion", 1, nullptr);
     juce::ValueTree groupsVT = juce::ValueTree("groups");
@@ -142,7 +146,7 @@ void DSPresetMaker::parseSFZValueTree(juce::ValueTree sfz) {
     }
 }
 
-void DSPresetMaker::translateSFZRegionProperties(juce::ValueTree sfzRegion, juce::ValueTree &dsEntity, HeaderLevel level) {
+void DSPresetConverter::translateSFZRegionProperties(juce::ValueTree sfzRegion, juce::ValueTree &dsEntity, HeaderLevel level) {
     for (int i = 0; i < sfzRegion.getNumProperties(); i++) {
         juce::String key = sfzRegion.getPropertyName(i).toString();
         juce::var value =      sfzRegion.getProperty(key);

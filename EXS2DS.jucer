@@ -8,9 +8,10 @@
     <GROUP id="{BCFD473C-7E58-BF49-3146-86F20D0C8613}" name="Source">
       <FILE id="GI2nX1" name="DSEXS24.cpp" compile="1" resource="0" file="Source/DSEXS24.cpp"/>
       <FILE id="XND9ff" name="DSEXS24.h" compile="0" resource="0" file="Source/DSEXS24.h"/>
-      <FILE id="WCZlcG" name="DSPresetMaker.cpp" compile="1" resource="0"
-            file="Source/DSPresetMaker.cpp"/>
-      <FILE id="Bx9zxm" name="DSPresetMaker.h" compile="0" resource="0" file="Source/DSPresetMaker.h"/>
+      <FILE id="M7LqJD" name="DSPresetConverter.cpp" compile="1" resource="0"
+            file="Source/DSPresetConverter.cpp"/>
+      <FILE id="WrqxM1" name="DSPresetConverter.h" compile="0" resource="0"
+            file="Source/DSPresetConverter.h"/>
       <FILE id="VLFMoc" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
   </MAINGROUP>

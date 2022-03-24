@@ -359,7 +359,7 @@ void DSEXS24::readSequences() {
         
         // now that we're at the start of the chain, simply follow it to the end
         sequence.clear();
-        while (gid != -1 and !sequence.contains(gid)) {
+        while (gid != -1 && !sequence.contains(gid)) {
 //            sequence.add(gid);
             sequence.insert(0, gid);
             gid = groups[gid].exsSequence;

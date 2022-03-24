@@ -8,7 +8,7 @@
 
 #include <JuceHeader.h>
 #include "DSEXS24.h"
-#include "DSPresetMaker.h"
+#include "DSPresetConverter.h"
 
 //==============================================================================
 int main (int argc, char* argv[])
@@ -35,9 +35,8 @@ int main (int argc, char* argv[])
     DSEXS24 exs;
     exs.loadExs(inputFile);
     
-    DSPresetMaker presetMaker;
+    DSPresetConverter presetMaker;
     presetMaker.parseDSEXS24(exs, sampleDir, outputFile.getParentDirectory());
-//    presetMaker.parseEXSValueTree(exs.getValueTree());
     DBG(presetMaker.getXML());
 
     
