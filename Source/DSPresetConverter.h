@@ -34,4 +34,5 @@ public:
 private:
     juce::ValueTree valueTree;
     void translateSFZRegionProperties(juce::ValueTree sfzRegion, juce::ValueTree &dsSample, HeaderLevel level);
+    void addGenericUI();
 };
