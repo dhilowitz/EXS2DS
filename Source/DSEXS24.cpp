@@ -73,7 +73,7 @@ bool DSEXS24::loadExs(juce::File file) {
             DBG("Group encountered");
             groups.add(readGroup(inputStream.get(), i, size + 84, bigEndian));
         } else if (chunk_type == 0x03) {
-            if (size != 336 && size != 592 && size != 600) {
+            if (size != 336 && size != 592 && size != 600 && size != 1624) {
                 return false;
             }
             DBG("Sample encountered");
@@ -110,13 +110,14 @@ DSEXS24Zone DSEXS24::readZone(juce::FileInputStream *inputStream, juce::int64 i,
     zone.key = inputStream->readByte();
 
     inputStream->setPosition(i + 86);
-    zone.fineTuning = twosComplement(inputStream->readByte(), 8);
+    zone.fineTuning = inputStream->readByte();
 
     inputStream->setPosition(i + 87);
     zone.pan = twosComplement(inputStream->readByte(), 8);
 
     inputStream->setPosition(i + 88);
-    zone.volume = twosComplement(inputStream->readByte(), 8);
+    zone.volume = twosComplement(inputStream->readShort(), 8);
+    
     inputStream->setPosition(i + 164);
     zone.coarseTuning = twosComplement(inputStream->readByte(), 8);
 
@@ -178,11 +179,33 @@ DSEXS24Zone DSEXS24::readZone(juce::FileInputStream *inputStream, juce::int64 i,
         inputStream->setPosition(i + 192);
         zone.offset = bigEndian ? inputStream->readIntBigEndian() : inputStream->readInt();
     }
+    
+    if(size > 208) {
+        inputStream->setPosition(i + 208);
+        zone.volume = bigEndian ? inputStream->readFloatBigEndian() : inputStream->readFloat();
+    }
+    
+//    for (int iPos = 0; iPos < size - 4; iPos++) {
+//        inputStream->setPosition(i + iPos);
+//        double floatValue = bigEndian ? inputStream->readFloatBigEndian() : inputStream->readFloat();
+////        short test8 = twosComplement(value, 8);
+//
+//        DBG("Byte position " + juce::String(iPos) + " float value " + juce::String(floatValue));
+//    }
+    
+//    for (int iPos = 88; iPos < size - 2; iPos++) {
+//        inputStream->setPosition(i + iPos);
+//        short value = inputStream->readShort();
+//        short test8 = twosComplement(value, 8);
+//
+//        DBG("Byte position " + juce::String(iPos) + " short value " + juce::String(value) + " => " + juce::String(test8));
+//    }
+    
     return zone;
 }
 
 
-DSEXS24Group DSEXS24::readGroup(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 size, bool bigEndian) {
+DSEXS24Group DSEXS24::readGroup(juce::FileInputStream *inputStream, juce::int64 i, juce::int64 , bool bigEndian) {
     DSEXS24Group group;
 
 //    inputStream->setPosition(i + 8);

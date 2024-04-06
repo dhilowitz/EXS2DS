@@ -21,7 +21,7 @@ struct DSEXS24Zone {
     short key;
     short fineTuning;
     short pan;
-    short volume;
+    float volume;
     short coarseTuning;
     short keyLow;
     short keyHigh;
