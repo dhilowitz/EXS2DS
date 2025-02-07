@@ -102,13 +102,13 @@ void DSPresetConverter::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juc
                 }
                 
                 if(zone.sampleEnd != 0) {
-                    dsSample.setProperty("end", zone.sampleEnd, nullptr);
+                    dsSample.setProperty("end", zone.sampleEnd - 1, nullptr);
                 }
                 
                 if(zone.loopEnabled) {
                     dsSample.setProperty("loopEnabled", zone.loopEnabled, nullptr);
                     dsSample.setProperty("loopStart", zone.loopStart, nullptr);
-                    dsSample.setProperty("loopEnd", zone.loopEnd, nullptr);
+                    dsSample.setProperty("loopEnd", zone.loopEnd - 1, nullptr);
                 
                     if(zone.loopCrossfade != 0) {
                         dsSample.setProperty("loopCrossfade", zone.loopCrossfade, nullptr);
