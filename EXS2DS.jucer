@@ -3,7 +3,7 @@
 <JUCERPROJECT id="hFsXS3" name="EXS2DS" projectType="consoleapp" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="Decidedly"
               companyCopyright="Copyright 2021-2024 Decidedly" companyWebsite="https://decentsamples.com"
-              companyEmail="dhilowitz@gmail.com" version="1.0.6">
+              companyEmail="dhilowitz@gmail.com" version="1.0.9">
   <MAINGROUP id="WZh12A" name="EXS2DS">
     <GROUP id="{BCFD473C-7E58-BF49-3146-86F20D0C8613}" name="Source">
       <FILE id="GI2nX1" name="DSEXS24.cpp" compile="1" resource="0" file="Source/DSEXS24.cpp"/>
