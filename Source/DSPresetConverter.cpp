@@ -54,6 +54,7 @@ void DSPresetConverter::parseDSEXS24(DSEXS24 exs24, juce::String samplePath, juc
         
         if(group.seqNumber != 0) {
             dsGroup.setProperty("seqPosition", group.seqNumber, nullptr);
+            dsGroup.setProperty("seqMode", "round_robin", nullptr);
         }
 //        dsGroup.setProperty("_exsSequence", group.exsSequence, nullptr);
         
