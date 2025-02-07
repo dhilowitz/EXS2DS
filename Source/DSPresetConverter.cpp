@@ -180,7 +180,7 @@ void DSPresetConverter::translateSFZRegionProperties(juce::ValueTree sfzRegion, 
         } else if(key == "lokey") {
             dsEntity.setProperty("loNote", value, nullptr);
         } else if(key == "loop_end") {
-            dsEntity.setProperty("loopEnd", value, nullptr);
+            dsEntity.setProperty("loopEnd", ((int) value) - 1, nullptr);
         } else if(key == "loop_mode") {
             if(value == "loop_continuous") {
                 dsEntity.setProperty("loopEnabled", (value == "loop_continuous") ? "true" : "false", nullptr);
