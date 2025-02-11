@@ -349,7 +349,7 @@ juce::String DSPresetConverter::getSFZ() {
             sfzFile = sfzFile + "end=" + valueTree.getProperty("end").toString() + " ";
         }
         if(valueTree.hasProperty("loopEnabled")) {
-            sfzFile = sfzFile + "loop_mode=loop_continuous\n";
+            sfzFile = sfzFile + "loop_mode=loop_continuous ";
         }
         if(valueTree.hasProperty("loopStart")) {
             sfzFile = sfzFile + "loop_start=" + valueTree.getProperty("loopStart").toString() + " ";
