@@ -19,42 +19,74 @@
   <EXPORTFORMATS>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="EXS2DS"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="EXS2DS"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="EXS2DS" headerPath="../../include"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="EXS2DS" headerPath="../../include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../../../../SDKs/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="../../../../../SDKs/JUCE/modules"/>
         <MODULEPATH id="juce_events" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../SDKs/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2019 targetFolder="Builds/VisualStudio2019">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="EXS2DS"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="EXS2DS"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="EXS2DS" headerPath="../../include"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="EXS2DS" headerPath="../../include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../../../../SDKs/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="../../../../../SDKs/JUCE/modules"/>
         <MODULEPATH id="juce_events" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../SDKs/JUCE/modules"/>
       </MODULEPATHS>
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="EXS2DS"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="EXS2DS"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="EXS2DS" headerPath="../../include"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="EXS2DS" headerPath="../../include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../../../../SDKs/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="../../../../../SDKs/JUCE/modules"/>
         <MODULEPATH id="juce_events" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../../../SDKs/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../SDKs/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
   <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <LIVE_SETTINGS>
     <WINDOWS/>
