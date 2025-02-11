@@ -32,7 +32,7 @@ struct DSEXS24Zone {
     int sampleEnd;
     int loopStart;
     int loopEnd;
-    int loopCrossfade;
+    int loopCrossfadeMilliseconds;
     bool loopEnabled;
     bool loopEqualPower;
     short output = -1;

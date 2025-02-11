@@ -148,8 +148,8 @@ DSEXS24Zone DSEXS24::readZone(juce::FileInputStream *inputStream, juce::int64 i,
     zone.loopEnd = bigEndian ? inputStream->readIntBigEndian() : inputStream->readInt();
 
     inputStream->setPosition(i + 112);
-    zone.loopCrossfade = bigEndian ? inputStream->readIntBigEndian() : inputStream->readInt();
-
+    zone.loopCrossfadeMilliseconds = (bigEndian ? inputStream->readIntBigEndian() : inputStream->readInt());
+    
     inputStream->setPosition(i + 117);
     char loopOpts = inputStream->readByte();
     zone.loopEnabled = (loopOpts & (1 << 0)) != 0;
