@@ -7,6 +7,8 @@ A command-line utility that converts Logic Sample (EXS) files to Decent Sampler 
 ./EXS2DS <exs-file> <ds-preset-file> [sample-directory]
 ```
 
+Only use the sample directory if you want the utility to overwrite any existing sample paths so that it looks in a specific sample directory.
+
 ## Example Usage
 
 ```
