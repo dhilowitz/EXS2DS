@@ -7,8 +7,8 @@
 */
 
 #include <JuceHeader.h>
-#include "DSEXS24.h"
-#include "DSPresetConverter.h"
+#include "DSPresetConverter/Source/DSEXS24.h"
+#include "DSPresetConverter/Source/DSPresetConverter.h"
 #include <tclap/CmdLine.h>
 
 //==============================================================================

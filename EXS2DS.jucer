@@ -6,12 +6,12 @@
               companyEmail="dhilowitz@gmail.com" version="1.1.0">
   <MAINGROUP id="WZh12A" name="EXS2DS">
     <GROUP id="{BCFD473C-7E58-BF49-3146-86F20D0C8613}" name="Source">
-      <FILE id="GI2nX1" name="DSEXS24.cpp" compile="1" resource="0" file="Source/DSEXS24.cpp"/>
-      <FILE id="XND9ff" name="DSEXS24.h" compile="0" resource="0" file="Source/DSEXS24.h"/>
+      <FILE id="GI2nX1" name="DSEXS24.cpp" compile="1" resource="0" file="Source/DSPresetConverter/Source/DSEXS24.cpp"/>
+      <FILE id="XND9ff" name="DSEXS24.h" compile="0" resource="0" file="Source/DSPresetConverter/Source/DSEXS24.h"/>
       <FILE id="M7LqJD" name="DSPresetConverter.cpp" compile="1" resource="0"
-            file="Source/DSPresetConverter.cpp"/>
+            file="Source/DSPresetConverter/Source/DSPresetConverter.cpp"/>
       <FILE id="WrqxM1" name="DSPresetConverter.h" compile="0" resource="0"
-            file="Source/DSPresetConverter.h"/>
+            file="Source/DSPresetConverter/Source/DSPresetConverter.h"/>
       <FILE id="VLFMoc" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
   </MAINGROUP>
@@ -36,25 +36,6 @@
         <MODULEPATH id="juce_audio_devices" path="../../../../../SDKs/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <VS2019 targetFolder="Builds/VisualStudio2019">
-      <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="EXS2DS" headerPath="../../include"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="EXS2DS" headerPath="../../include"/>
-      </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="../../../../../SDKs/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../../../../SDKs/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../../../../SDKs/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../../../../../SDKs/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../../../../SDKs/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../../../../SDKs/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../../../../SDKs/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../../../../SDKs/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../../../../../SDKs/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../../../../SDKs/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../../../../SDKs/JUCE/modules"/>
-      </MODULEPATHS>
-    </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="EXS2DS" headerPath="../../include"/>
